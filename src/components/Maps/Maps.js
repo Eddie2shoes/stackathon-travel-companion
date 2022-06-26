@@ -1,7 +1,6 @@
-import React, { useMemo, useEffect, useRef, useState, useCallback } from "react";
-// import axios from "axios";
+import React, { useRef, useCallback } from "react";
 import GoogleMapReact from "google-map-react";
-import { Paper, Typography, useMediaQuery, Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import LocationOnOutlined from "@mui/icons-material/LocationOnOutlined";
 import Rating from "@mui/material/Rating";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
@@ -11,23 +10,16 @@ const mapContainerStyle = {
   width: "100vh",
 };
 
-// const ReactComponent = ({ text }) => <div>{text}</div>;
-
 const Maps = ({ coords, setCoords, setBoundary }) => {
-  // const center = useMemo(() => ({ lat: 40.75682, lng: -73.88095 }), []);
-  // const [position, setPosition] = useState({ lat: 40.75682, lng: -73.88095 });
   const mapRef = useRef(null);
-  // const mapBounds = useRef(null);
   // const isMobile = useMediaQuery("(min-width:600px)");
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    // libraries: ["places"],
   });
 
   const handleLoad = useCallback((map) => {
     mapRef.current = map;
-    // mapBounds.current = map;
   }, []);
 
   const handleCenterChanged = () => {
@@ -63,3 +55,4 @@ export default Maps;
 //     <ReactComponent text="marker" lat={40.74913} lng={-73.89403} />
 //   </GoogleMapReact>
 // </div>
+//Todo find out why this doesn't render map

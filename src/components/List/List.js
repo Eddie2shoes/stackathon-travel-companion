@@ -16,11 +16,11 @@ import Places from "../Places/Places";
 //   return <div>{!data ? "Loading..." : data}</div>;
 // };
 
-const List = () => {
+const List = ({ places }) => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
 
-  const places = [{ name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }, { name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }, { name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }];
+  // const places = [{ name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }, { name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }, { name: "Cool Place" }, { name: "Best Beer" }, { name: "Best Food" }];
 
   return (
     <Box className="list-container">

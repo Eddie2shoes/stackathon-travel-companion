@@ -19,12 +19,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log(coords);
-    getPlacesData().then((data) => {
-      console.log(data);
+    getPlacesData(boundary.sw, boundary.ne).then((data) => {
       setPlaces(data);
     });
-  }, [coords]);
+  }, [boundary]);
 
   return (
     <>
@@ -36,15 +34,14 @@ const Home = () => {
         <Box sx={{ paddingTop: 10, display: "flex" }}>
           <Grid container>
             <Grid>
-              <List />
-              {/* HELLLLLO This is a message from Ed */}
+              <List places={places} />
             </Grid>
             {/* <Grid item xs={12} md={8} lg={1}>
             <Maps />
           </Grid> */}
           </Grid>
           <Box sx={{ paddingLeft: 5 }}>
-            <Maps setCoords={setCoords} setBoundary={setBoundary} coords={coords} />
+            <Maps setCoords={setCoords} setBoundary={setBoundary} coords={coords} places={places} />
           </Box>
         </Box>
       </Container>

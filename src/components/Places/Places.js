@@ -5,7 +5,7 @@ import LocationOn from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Rating from "@mui/material/Rating";
 
-const defaultImgUrl = "https://media.cntraveler.com/photos/5a8f3b070e2cf839e9dbfa1d/2:1/w_2560%2Cc_limit/NYC_GettyImages-640006562.jpg";
+export const defaultImgUrl = "https://media.cntraveler.com/photos/5a8f3b070e2cf839e9dbfa1d/2:1/w_2560%2Cc_limit/NYC_GettyImages-640006562.jpg";
 
 const spacing = styled("div")(({ theme }) => ({
   display: "flex",
@@ -22,6 +22,12 @@ const Places = ({ place }) => {
         <Typography gutterBottom variant="h5">
           {place.name}
         </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Rating name="read-only" value={place.rating} readOnly />
+          <Typography gutterBottom variant="subtitle1">
+            out of {place.num_reviews}
+          </Typography>
+        </Box>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="subtitle1">Price</Typography>
           <Typography gutterBottom variant="subtitle1">

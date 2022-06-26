@@ -4,15 +4,26 @@ import Box from "@mui/material/Box";
 import LocationOnOutlined from "@mui/icons-material/LocationOnOutlined";
 import Rating from "@mui/material/Rating";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { useMediaQuery, Paper, Typography } from "@mui/material";
+import { defaultImgUrl } from "../Places/Places";
+import mapStyles from "./mapStyles";
 
 const mapContainerStyle = {
   height: "80vh",
   width: "100vh",
 };
 
-const Maps = ({ coords, setCoords, setBoundary }) => {
+const paperStyle = {
+  padding: "10px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  width: "100px",
+};
+
+const Maps = ({ coords, setCoords, setBoundary, places }) => {
   const mapRef = useRef(null);
-  // const isMobile = useMediaQuery("(min-width:600px)");
+  const matches = useMediaQuery("(min-width:600px)");
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
@@ -40,8 +51,23 @@ const Maps = ({ coords, setCoords, setBoundary }) => {
       {!isLoaded ? (
         <div>Loading...</div>
       ) : (
-        <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={13} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged}>
-          <Marker position={coords} />
+        <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={13} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged} options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}>
+          {/* <Marker position={coords} /> */}
+          {places?.map((place, i) => (
+            <div key={i} style={{ position: "absolute", transform: "translate(-50%, -50%)", zIndex: 1, "&:hover": { zIndex: 2 } }} position={{ lat: parseFloat(place.latitude), lng: parseFloat(place.longitude) }}>
+              {!matches ? (
+                <LocationOnOutlined color="primary" fontSize="large" />
+              ) : (
+                <Paper elevation={3} sx={paperStyle}>
+                  <Typography gutterBottom variant="subtitle2">
+                    {place.name}
+                  </Typography>
+                  <img style={{ cursor: "pointer" }} src={place.photo ? place.photo.images.large.url : defaultImgUrl} alt={place.name} />
+                  <Rating name="read-only" size="small" value={place.rating} readOnly />
+                </Paper>
+              )}
+            </div>
+          ))}
         </GoogleMap>
       )}
     </Box>
@@ -55,4 +81,6 @@ export default Maps;
 //     <ReactComponent text="marker" lat={40.74913} lng={-73.89403} />
 //   </GoogleMapReact>
 // </div>
+
+// lat={parseFloat(place.latitude)} lng={parseFloat(place.longitude)}
 //Todo find out why this doesn't render map

@@ -20,10 +20,10 @@ const Home = () => {
 
   useEffect(() => {
     console.log(coords);
-    // getPlacesData().then((data) => {
-    //   console.log(data);
-    //   setPlaces(data);
-    // });
+    getPlacesData().then((data) => {
+      console.log(data);
+      setPlaces(data);
+    });
   }, [coords]);
 
   return (

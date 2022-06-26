@@ -39,8 +39,8 @@ const Maps = ({ coords, setCoords, setBoundary }) => {
   const handleBoundsChanged = useCallback(() => {
     if (!mapRef.current) return;
     const newBounds = mapRef.current.getBounds();
-    setBoundary(newBounds);
-    console.log("@@@@@@", newBounds.ub.lo, newBounds.Ra.lo); //newBounds.ub.lo & newBounds.Ra.lo = sw boundary and .hi for nw boundary
+    setBoundary({ sw: { lat: newBounds.ub.lo, lng: newBounds.Ra.lo }, ne: { lat: newBounds.ub.hi, lng: newBounds.Ra.hi } });
+    console.log("@@@@@@", newBounds.ub.lo, newBounds.ub.hi); //newBounds.ub.lo & newBounds.Ra.lo = sw boundary and .hi for nw boundary
   }, [setBoundary]);
 
   return (

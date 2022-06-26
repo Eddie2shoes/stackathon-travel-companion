@@ -10,28 +10,42 @@ const mapContainerStyle = {
   height: "80vh",
   width: "100vh",
 };
-const Map = () => {
-  const center = useMemo(() => ({ lat: 40.75682, lng: -73.88095 }), []);
-
-  return <GoogleMap zoom={13} center={center} mapContainerStyle={mapContainerStyle}></GoogleMap>;
-};
 
 // const ReactComponent = ({ text }) => <div>{text}</div>;
 
-const Maps = () => {
+const Maps = ({ coords, setCoords, setBoundary }) => {
+  const center = useMemo(() => ({ lat: 40.75682, lng: -73.88095 }), []);
   // const isMobile = useMediaQuery("(min-width:600px)");
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-    locations: ["places"],
+    // libraries: ["places"],
   });
-  //   <div className="map-container" style={{ height: "100vh", width: "100%" }}>
-  //   <GoogleMapReact bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }} defaultCenter={coords} center={coords} defaultZoom={10}>
-  //     <ReactComponent text="marker" lat={40.74913} lng={-73.89403} />
-  //   </GoogleMapReact>
-  // </div>
 
-  return <Box>{!isLoaded ? <div>Loading...</div> : <Map />}</Box>;
+  return (
+    <Box>
+      {!isLoaded ? (
+        <div>Loading...</div>
+      ) : (
+        <GoogleMap
+          zoom={13}
+          center={center}
+          mapContainerStyle={mapContainerStyle}
+          onCenterChanged={(e) => {
+            // setCoords({ lat: e.center.lat, lng: e.center.lng });
+            // setBoundary({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
+            console.log(e);
+          }}
+        ></GoogleMap>
+      )}
+    </Box>
+  );
 };
 
 export default Maps;
+
+//   <div className="map-container" style={{ height: "100vh", width: "100%" }}>
+//   <GoogleMapReact bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_API_KEY }} defaultCenter={coords} center={coords} defaultZoom={10}>
+//     <ReactComponent text="marker" lat={40.74913} lng={-73.89403} />
+//   </GoogleMapReact>
+// </div>

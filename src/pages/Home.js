@@ -13,11 +13,18 @@ const Home = () => {
   const [boundary, setBoundary] = useState({});
 
   useEffect(() => {
+    navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
+      setCoords({ lat: latitude, lng: longitude });
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(coords, boundary);
     getPlacesData().then((data) => {
       console.log(data);
       setPlaces(data);
     });
-  }, []);
+  }, [coords, boundary]);
 
   return (
     <>
@@ -37,7 +44,7 @@ const Home = () => {
           </Grid> */}
           </Grid>
           <Box sx={{ paddingLeft: 5 }}>
-            <Maps />
+            <Maps setCoords={setCoords} setBoundary={setBoundary} coords={coords} />
           </Box>
         </Box>
       </Container>

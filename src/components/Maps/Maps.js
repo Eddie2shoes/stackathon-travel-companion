@@ -30,19 +30,30 @@ const Maps = ({ coords, setCoords, setBoundary }) => {
     // mapBounds.current = map;
   }, []);
 
-  const handleCenterChanged = useCallback(() => {
+  const handleCenterChanged = () => {
     if (!mapRef.current) return;
     const newPosition = mapRef.current.getCenter();
-    setCoords(newPosition);
-  });
+    setCoords({ lat: newPosition.lat(), lng: newPosition.lng() });
+  };
 
   const handleBoundsChanged = useCallback(() => {
     if (!mapRef.current) return;
     const newBounds = mapRef.current.getBounds();
     setBoundary(newBounds);
-  });
+    console.log("@@@@@@", newBounds.ub.lo, newBounds.Ra.lo); //newBounds.ub.lo & newBounds.Ra.lo = sw boundary and .hi for nw boundary
+  }, [setBoundary]);
 
-  return <Box>{!isLoaded ? <div>Loading...</div> : <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={13} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged}></GoogleMap>}</Box>;
+  return (
+    <Box>
+      {!isLoaded ? (
+        <div>Loading...</div>
+      ) : (
+        <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={13} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged}>
+          <Marker position={coords} />
+        </GoogleMap>
+      )}
+    </Box>
+  );
 };
 
 export default Maps;

@@ -19,12 +19,12 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log(coords, boundary);
+    console.log(coords);
     // getPlacesData().then((data) => {
     //   console.log(data);
     //   setPlaces(data);
     // });
-  }, [coords, boundary]);
+  }, [coords]);
 
   return (
     <>

@@ -1,15 +1,15 @@
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import GoogleMapReact from "google-map-react";
 import Box from "@mui/material/Box";
 import LocationOnOutlined from "@mui/icons-material/LocationOnOutlined";
 import Rating from "@mui/material/Rating";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, Marker, InfoBox } from "@react-google-maps/api";
 import { useMediaQuery, Paper, Typography } from "@mui/material";
 import { defaultImgUrl } from "../Places/Places";
 import mapStyles from "./mapStyles";
 
 const mapContainerStyle = {
-  height: "80vh",
+  height: "90vh",
   width: "100vh",
 };
 
@@ -21,7 +21,7 @@ const paperStyle = {
   width: "100px",
 };
 
-const Maps = ({ coords, setCoords, setBoundary, places }) => {
+const Maps = ({ coords, setCoords, setBoundary, places, setClicked }) => {
   const mapRef = useRef(null);
   const matches = useMediaQuery("(min-width:600px)");
 
@@ -51,10 +51,10 @@ const Maps = ({ coords, setCoords, setBoundary, places }) => {
       {!isLoaded ? (
         <div>Loading...</div>
       ) : (
-        <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={13} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged} options={{ disableDefaultUI: true, zoomControl: true, styles: mapStyles }}>
+        <GoogleMap onLoad={handleLoad} mapContainerClassName="map" zoom={15} center={coords} mapContainerStyle={mapContainerStyle} onDragEnd={handleCenterChanged} onBoundsChanged={handleBoundsChanged} options={{ zoomControl: true, styles: mapStyles }}>
           {/* <Marker position={coords} /> */}
           {places?.map((place, i) => (
-            <div key={i} style={{ position: "absolute", transform: "translate(-50%, -50%)", zIndex: 1, "&:hover": { zIndex: 2 } }} position={{ lat: parseFloat(place.latitude), lng: parseFloat(place.longitude) }}>
+            <InfoBox key={i} style={{ position: "absolute", transform: "translate(-50%, -50%)", zIndex: 1, "&:hover": { zIndex: 2 } }} position={{ lat: parseFloat(place.latitude), lng: parseFloat(place.longitude) }}>
               {!matches ? (
                 <LocationOnOutlined color="primary" fontSize="large" />
               ) : (
@@ -62,11 +62,11 @@ const Maps = ({ coords, setCoords, setBoundary, places }) => {
                   <Typography gutterBottom variant="subtitle2">
                     {place.name}
                   </Typography>
-                  <img style={{ cursor: "pointer" }} src={place.photo ? place.photo.images.large.url : defaultImgUrl} alt={place.name} />
+                  <img style={{ cursor: "pointer" }} src={place.photo ? place.photo.images.large.url : defaultImgUrl} alt={place.name} onClick={() => setClicked(i)} />
                   <Rating name="read-only" size="small" value={place.rating} readOnly />
                 </Paper>
               )}
-            </div>
+            </InfoBox>
           ))}
         </GoogleMap>
       )}

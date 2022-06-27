@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useEffect, createRef } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import List from "../components/List/List";
 import Maps from "../components/Maps/Maps";
@@ -11,6 +10,11 @@ const Home = () => {
   const [places, setPlaces] = useState([]);
   const [coords, setCoords] = useState({});
   const [boundary, setBoundary] = useState({});
+  const [clicked, setClicked] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [type, setType] = useState("restaurants");
+  const [rating, setRating] = useState("");
+  const [filteredPlaces, setFilteredPlaces] = useState([]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(({ coords: { latitude, longitude } }) => {
@@ -19,30 +23,35 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    getPlacesData(boundary.sw, boundary.ne).then((data) => {
+    setLoading(true);
+    getPlacesData(type, boundary.sw, boundary.ne).then((data) => {
       setPlaces(data);
+      setFilteredPlaces([]);
+      setLoading(false);
     });
-  }, [boundary]);
+  }, [coords, boundary, type]);
+
+  useEffect(() => {
+    const filteredPlaces = places.filter((place) => place.rating > rating);
+    setFilteredPlaces(filteredPlaces);
+  }, [rating]);
 
   return (
     <>
       <CssBaseline />
       <Box className="Home">
-        <NavBar />
+        <NavBar setCoords={setCoords} />
       </Box>
       <Container maxWidth="xxl">
-        <Box sx={{ paddingTop: 10, display: "flex" }}>
+        <Box sx={{ paddingTop: 5, display: "flex" }}>
           <Grid container>
             <Grid>
-              <List places={places} />
+              <List places={filteredPlaces.length ? filteredPlaces : places} clicked={clicked} loading={loading} type={type} setType={setType} rating={rating} setRating={setRating} />
             </Grid>
-            {/* <Grid item xs={12} md={8} lg={1}>
-            <Maps />
-          </Grid> */}
           </Grid>
-          <Box sx={{ paddingLeft: 5 }}>
-            <Maps setCoords={setCoords} setBoundary={setBoundary} coords={coords} places={places} />
-          </Box>
+          <Grid sx={{ paddingLeft: 5 }}>
+            <Maps setCoords={setCoords} setBoundary={setBoundary} coords={coords} places={filteredPlaces.length ? filteredPlaces : places} setClicked={setClicked} />
+          </Grid>
         </Box>
       </Container>
     </>

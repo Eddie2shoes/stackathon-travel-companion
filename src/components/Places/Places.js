@@ -13,8 +13,9 @@ const spacing = styled("div")(({ theme }) => ({
   justifyContent: "space-between",
 }));
 
-const Places = ({ place }) => {
-  console.log(place);
+const Places = ({ place, selected, refProp }) => {
+  if (selected) refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+
   return (
     <Card elevation={6}>
       <CardMedia style={{ height: 350 }} image={place.photo ? place.photo.images.large.url : defaultImgUrl} title={place.name} />

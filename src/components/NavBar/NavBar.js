@@ -31,7 +31,7 @@ const NavBar = ({ setCoords }) => {
       <AppBar position="relative" sx={{ background: "linear-gradient(to right, lightBlue, lightGreen, aliceBlue)" }}>
         <Toolbar sx={{ flexGrow: 3, justifyContent: "space-between" }}>
           {/* <Typography variant="h5" component="h5" sx={{ fontWeight: "bold", fontSize: 30, color: "black" }}> */}
-          <Box sx={{ fontWeight: "bold", fontSize: 30, color: "blue", fontFamily: "Roboto" }}>
+          <Box sx={{ fontWeight: "bold", fontSize: 30, color: "#11A7AC", fontFamily: "Roboto" }}>
             Stackathon Travel Companion
             {/* </Typography> */}
           </Box>
@@ -46,9 +46,6 @@ const NavBar = ({ setCoords }) => {
                 <SearchIcon sx={{ paddingTop: 1, fontSize: 30, color: "blue" }} />
               </Box>
               <Search>
-                {/* <SearchIconWrapper> */}
-                {/* </SearchIconWrapper> */}
-                {/* <SearchFunction /> */}
                 <InputBase placeholder="Search here" sx={{ position: "relative", height: "auto" }} />
               </Search>
             </Box>

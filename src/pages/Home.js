@@ -1,8 +1,8 @@
+/* eslint-disable */
 import React, { useState, useEffect, createRef } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import List from "../components/List/List";
 import Maps from "../components/Maps/Maps";
-import Places from "../components/Places/Places";
 import { getPlacesData } from "../components/Places/travelCompanion";
 import { CssBaseline, Grid, Box, Container } from "@mui/material";
 
@@ -36,6 +36,7 @@ const Home = () => {
     setFilteredPlaces(filteredPlaces);
   }, [rating]);
 
+  console.log("@@@@@@@@@@@", clicked);
   return (
     <>
       <CssBaseline />

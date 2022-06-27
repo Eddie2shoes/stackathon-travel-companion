@@ -1,20 +1,20 @@
 import React from "react";
 import { Box, Typography, Button, Card, CardMedia, CardContent, CardActions, Chip } from "@mui/material";
-import { styled, alpha } from "@mui/material/styles";
+// import { styled } from "@mui/material/styles";
 import LocationOn from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Rating from "@mui/material/Rating";
 
 export const defaultImgUrl = "https://media.cntraveler.com/photos/5a8f3b070e2cf839e9dbfa1d/2:1/w_2560%2Cc_limit/NYC_GettyImages-640006562.jpg";
 
-const spacing = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-}));
+// const spacing = styled("div")(({ theme }) => ({
+//   display: "flex",#11A7AC
+//   alignItems: "center",
+//   justifyContent: "space-between",
+// }));
 
 const Places = ({ place, selected, refProp }) => {
-  if (selected) refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (selected) refProp?.current?.scrollIntoView({ behavior: "auto", block: "start" });
 
   return (
     <Card elevation={6}>
